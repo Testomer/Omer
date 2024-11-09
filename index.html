@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>المغذيات والجهاز الهضمي - عمر</title>
+  <style>
+    /* General Styles */
+    body {
+      background-color: black;
+      color: green;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Title Style */
+    h1 {
+      color: darkblue;
+      font-size: 2em;
+      animation: fadeIn 2s ease-in-out;
+      padding: 20px;
+      margin: 0;
+    }
+
+    /* Visual Effects */
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(-20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Quiz Container */
+    .quiz-container {
+      max-width: 600px;
+      margin: auto;
+      padding: 20px;
+      background: #222;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 255, 0, 0.7);
+      animation: fadeIn 1.5s ease-in-out;
+    }
+
+    /* Questions and Answers */
+    .question {
+      font-size: 1.2em;
+      margin: 20px 0;
+    }
+    .answer {
+      display: block;
+      padding: 10px;
+      margin: 5px;
+      background: #333;
+      border: 1px solid green;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .answer:hover {
+      background: green;
+      color: black;
+    }
+
+    /* Correct/Incorrect Styles */
+    .correct {
+      color: #0f0;
+    }
+    .incorrect {
+      color: #f00;
+    }
+    .disabled {
+      pointer-events: none;
+      opacity: 0.6;
+    }
+
+    /* Button */
+    #submit-btn {
+      padding: 10px 20px;
+      background: darkblue;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: background 0.3s;
+      font-size: 1.2em;
+      animation: fadeIn 2s ease-in-out;
+    }
+    #submit-btn:hover {
+      background: blue;
+    }
+  </style>
+</head>
+<body>
+  <h1>المغذيات والجهاز الهضمي - عمر</h1>
+
+  <div class="quiz-container" id="quiz-container">
+    <!-- Questions will be injected here -->
+  </div>
+  
+  <button id="submit-btn" onclick="submitQuiz()">اضغط هنا لترى نتيجتك</button>
+  <div id="result"></div>
+
+  <script>
+    const questions = [
+      { question: "ما هو العضو الرئيسي في الجهاز الهضمي الذي يبدأ عملية الهضم؟", choices: ["الفم", "المعدة", "الأمعاء الدقيقة"], correct: 0 },
+      { question: "ما هو الإنزيم الذي يساعد على هضم البروتينات في المعدة؟", choices: ["الأميليز", "الببسين", "الليباز"], correct: 1 },
+      { question: "أين يحدث امتصاص معظم العناصر الغذائية؟", choices: ["المعدة", "الأمعاء الدقيقة", "الأمعاء الغليظة"], correct: 1 },
+      { question: "ما هو العضو المسؤول عن إنتاج العصارة الصفراوية؟", choices: ["الكبد", "الكلى", "البنكرياس"], correct: 0 },
+      { question: "ما هي المغذيات التي تعتبر المصدر الرئيسي للطاقة؟", choices: ["البروتينات", "الدهون", "الكربوهيدرات"], correct: 2 },
+      { question: "أي من هذه الأطعمة يحتوي على نسبة عالية من الألياف؟", choices: ["الأرز", "البقوليات", "الدجاج"], correct: 1 },
+      { question: "أي نوع من الدهون يعتبر صحياً للقلب؟", choices: ["الدهون المشبعة", "الدهون غير المشبعة", "الدهون المتحولة"], correct: 1 },
+      { question: "ما هو الدور الرئيسي للدهون في الجسم؟", choices: ["بناء العضلات", "تخزين الطاقة", "تكوين الدم"], correct: 1 },
+      { question: "أي من هذه الفيتامينات ضروري لصحة العظام؟", choices: ["فيتامين C", "فيتامين D", "فيتامين E"], correct: 1 },
+      { question: "أي نوع من السكريات يستخدم كوقود سريع للجسم؟", choices: ["الجلوكوز", "السليلوز", "الجلاكتوز"], correct: 0 },
+      { question: "ما هو المركب الذي يحمل الأكسجين في الدم؟", choices: ["الهيموجلوبين", "الكيراتين", "الكولاجين"], correct: 0 },
+      { question: "أي معدن ضروري لتكوين العظام والأسنان؟", choices: ["الحديد", "الكالسيوم", "الصوديوم"], correct: 1 },
+      { question: "ما هي المغذيات المسؤولة عن بناء الأنسجة؟", choices: ["الكربوهيدرات", "البروتينات", "الدهون"], correct: 1 },
+      { question: "أين يتم إنتاج الإنزيمات الهضمية؟", choices: ["الكبد", "البنكرياس", "الطحال"], correct: 1 },
+      { question: "أي نوع من الفيتامينات يذوب في الماء؟", choices: ["فيتامين A", "فيتامين B", "فيتامين K"], correct: 1 },
+      { question: "ما هو الهدف من عملية الهضم؟", choices: ["إنتاج الطاقة", "امتصاص المغذيات", "إفراز الفضلات"], correct: 1 },
+      { question: "أي نوع من المغذيات يساهم في بناء العضلات؟", choices: ["الدهون", "الكربوهيدرات", "البروتينات"], correct: 2 },
+      { question: "أي من العناصر التالية يعتبر معدنًا مهمًا للجسم؟", choices: ["الكبريت", "اليود", "الأكسجين"], correct: 1 },
+      { question: "ما هو العضو الذي يفرز العصارة المعوية؟", choices: ["الأمعاء الدقيقة", "الأمعاء الغليظة", "الكبد"], correct: 0 },
+      { question: "أي من هذه المجموعات الغذائية يحتوي على الفيتامينات؟", choices: ["الحبوب", "الفواكه والخضروات", "اللحوم"], correct: 1 },
+    ];
+
+    const quizContainer = document.getElementById('quiz-container');
+
+    function loadQuiz() {
+      questions.forEach((q, index) => {
+        const questionElement = document.createElement('div');
+        questionElement.classList.add('question');
+        questionElement.innerHTML = `<h2>السؤال ${index + 1}: ${q.question}</h2>`;
+        
+        q.choices.forEach((choice, i) => {
+          const choiceElement = document.createElement('div');
+          choiceElement.classList.add('answer');
+          choiceElement.textContent = choice;
+          choiceElement.onclick = () => selectAnswer(index, i, choiceElement);
+          questionElement.appendChild(choiceElement);
+        });
+
+        quizContainer.appendChild(questionElement);
+      });
+    }
+
+    function selectAnswer(questionIndex, choiceIndex, element) {
+      if (questions[questionIndex].hasAnswered) return;
+
+      questions[questionIndex].userAnswer = choiceIndex;
+      questions[questionIndex].hasAnswered = true;
+
+      if (choiceIndex === questions[questionIndex].correct) {
+        element.classList.add('correct');
+        element.innerHTML += " - إجابة صحيحة";
+      } else {
+        element.classList.add('incorrect');
+        element.innerHTML += " - إجابة خاطئة";
+      }
+
+      const answers = element.parentElement.querySelectorAll('.answer');
+      answers.forEach((ans) => ans.classList.add('disabled'));
+    }
+
+    function submitQuiz() {
+      let score = 0;
+      questions.forEach((q) => {
+        if (q.userAnswer === q.correct) score++;
+      });
+      document.getElementById('result').innerHTML = `<h2>نتيجتك: ${score} من ${questions.length}</h2>`;
+    }
+
+    loadQuiz();
+  </script>
+</body>
+</html>
